@@ -3,7 +3,7 @@ import pathlib
 
 here = pathlib.Path(__file__).parent
 
-with open(here / 'dsgflex' / '_version.py', encoding='utf-8') as f:
+with open(here / 'dsgutils' / '_version.py', encoding='utf-8') as f:
     version = f.read()
 
 version = version.split()[2].strip()[2].strip('"')
