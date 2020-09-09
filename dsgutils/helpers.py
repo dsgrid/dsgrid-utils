@@ -16,3 +16,4 @@ def ensure_enum(cls, val):
     if isinstance(val, str):
         return cls[val]
     return cls(val)
+    
