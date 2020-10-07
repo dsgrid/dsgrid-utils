@@ -45,10 +45,11 @@ def assert_datetime_index(index):
 
 def make_index_datetime(df):
     if not isinstance(df.index, pd.DatetimeIndex):
-        logger.warning("Converting pf.DataFrame index to pd.DatetimeIndex. "
-            f"Before:\n{df.index}")
+        original = None if df.index.empty else df.index.copy()
         df.index = pd.to_datetime(df.index)
-        logger.warning(f"After:\n{df.index}")
+        if original is not None:
+            logger.warning("Converted pd.DataFrame index to pd.DatetimeIndex.\n"
+                f"Before:\n{original}\nAfter:\n{df.index}")
     return
 
 
@@ -110,7 +111,7 @@ def to_time_unit(timedelta, time_unit):
     time_unit = ensure_enum(TimeUnits, time_unit)
 
     # timedelta in seconds
-    result = timedelta / np.timedelta64(1, 's')
+    result = np.timedelta64(timedelta) / np.timedelta64(1, 's')
     if time_unit == TimeUnits.second:
         return result
     # in minutes
