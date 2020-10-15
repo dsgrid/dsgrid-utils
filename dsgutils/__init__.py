@@ -126,7 +126,11 @@ def get_log_level(option, default_level = logging.WARNING):
     -------
     one of the log_levels.values()
     """
-    level = log_levels.get(option.upper())
+    level = None
+    if isinstance(option, str):
+        level = log_levels.get(option.upper())
+    elif option in log_level_strs:
+        level = log_levels[log_level_strs[option]]
     if level is None:
         logger.warning(f"Unable to parse {option} as a log level. Defaulting to {default_level}.")
         level = default_level
